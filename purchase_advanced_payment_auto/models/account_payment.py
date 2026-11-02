@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
+from markupsafe import Markup
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+
+# Odoo 18 payment states: a confirmed payment is 'in_process' (journal entry posted, not yet
+# matched with the bank) or 'paid'. 'canceled' and 'rejected' payments are no longer active.
+ADVANCE_POSTED_STATES = ('in_process', 'paid')
+ADVANCE_INACTIVE_STATES = ('canceled', 'rejected')
 
 
 class AccountPayment(models.Model):
@@ -71,11 +78,11 @@ class AccountPayment(models.Model):
     # -------------------------------------------------------------------------
 
     @api.constrains('purchase_advance_order_id', 'partner_id', 'currency_id', 'payment_type',
-                    'is_internal_transfer', 'destination_account_id')
+                    'partner_type', 'destination_account_id')
     def _check_purchase_advance_consistency(self):
         for pay in self.filtered('purchase_advance_order_id'):
             order = pay.purchase_advance_order_id
-            if pay.is_internal_transfer or pay.payment_type != 'outbound' or pay.partner_type != 'supplier':
+            if pay.payment_type != 'outbound' or pay.partner_type != 'supplier':
                 raise ValidationError(_(
                     "Advance payment %s must be an outgoing vendor payment.", pay.display_name))
             if pay.partner_id.commercial_partner_id != order.partner_id.commercial_partner_id:
@@ -96,22 +103,39 @@ class AccountPayment(models.Model):
     # ACTIONS
     # -------------------------------------------------------------------------
 
+    def _purchase_advance_ensure_outstanding_account(self):
+        """ Since Odoo 18 a payment only gets a journal entry when it has an outstanding account.
+        Community sets a fallback on every payment; with Accounting (Enterprise) installed a
+        payment method without outstanding account creates no entry at all. An advance must be
+        booked on the prepayment account, so advances always fall back to the company's
+        Outstanding Payments account, exactly like Community does. """
+        for pay in self.filtered(lambda p: p.purchase_advance_order_id and p.state == 'draft'
+                                 and not p.outstanding_account_id):
+            pay.outstanding_account_id = pay._get_outstanding_account(pay.payment_type)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        payments = super().create(vals_list)
+        payments._purchase_advance_ensure_outstanding_account()
+        return payments
+
     def action_post(self):
+        self._purchase_advance_ensure_outstanding_account()
         res = super().action_post()
         for pay in self.filtered('purchase_advance_order_id'):
-            pay.purchase_advance_order_id.message_post(body=_(
-                "Advance payment %(payment)s of %(amount)s posted.",
-                payment=pay._get_html_link(),
-                amount=pay.currency_id.format(pay.amount)))
+            pay.purchase_advance_order_id.message_post(body=Markup(_(
+                "Advance payment %(payment)s of %(amount)s posted.")) % {
+                'payment': pay._get_html_link(),
+                'amount': pay.currency_id.format(pay.amount)})
         return res
 
     def action_draft(self):
-        advances = self.filtered(lambda p: p.purchase_advance_order_id and p.state == 'posted')
+        advances = self.filtered(lambda p: p.purchase_advance_order_id and p.state in ADVANCE_POSTED_STATES)
         res = super().action_draft()
         for pay in advances:
-            pay.purchase_advance_order_id.message_post(body=_(
-                "Advance payment %s was reset to draft; it no longer counts in the advance total.",
-                pay._get_html_link()))
+            pay.purchase_advance_order_id.message_post(body=Markup(_(
+                "Advance payment %s was reset to draft; it no longer counts in the advance total.")) % (
+                pay._get_html_link(),))
         return res
 
     def action_view_purchase_advance_bills(self):

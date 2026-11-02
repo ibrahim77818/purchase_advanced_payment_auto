@@ -2,6 +2,8 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
+from .account_payment import ADVANCE_INACTIVE_STATES, ADVANCE_POSTED_STATES
+
 
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
@@ -61,7 +63,7 @@ class PurchaseOrder(models.Model):
         for order in self:
             applied = order._get_advance_applied_amount()
             open_advances = sum(order.advance_payment_ids.filtered(
-                lambda p: p.state != 'cancel').mapped('amount'))
+                lambda p: p.state not in ADVANCE_INACTIVE_STATES).mapped('amount'))
             order.advance_payment_applied = applied
             order.advance_payment_residual = order.advance_payment_total - applied
             available = order.amount_total - order._get_advance_billed_gross() - (open_advances - applied)
@@ -73,7 +75,7 @@ class PurchaseOrder(models.Model):
 
     def _get_posted_advance_payments(self):
         self.ensure_one()
-        return self.advance_payment_ids.filtered(lambda p: p.state == 'posted')
+        return self.advance_payment_ids.filtered(lambda p: p.state in ADVANCE_POSTED_STATES)
 
     def _get_advance_deduction_lines(self, exclude_moves=None):
         """ Deduction lines of non-cancelled bills of this order. """
@@ -110,7 +112,7 @@ class PurchaseOrder(models.Model):
 
     def _get_advance_fully_billed(self):
         self.ensure_one()
-        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        precision = self.env['decimal.precision'].precision_get('Product Unit')
         return all(
             float(line.qty_to_invoice) <= 10 ** -precision
             and line.qty_invoiced >= line.product_qty - 10 ** -precision
@@ -136,8 +138,7 @@ class PurchaseOrder(models.Model):
         if not self.env.user.has_group('account.group_account_invoice'):
             raise UserError(_("Only billing users can register advance payments."))
         for order in self:
-            order.check_access_rights('write')
-            order.check_access_rule('write')
+            order.check_access('write')
             if not order.company_id.purchase_advance_payment_enabled:
                 raise UserError(_(
                     "Advance payments are not enabled for %s. Enable them in Purchase > "
@@ -183,7 +184,7 @@ class PurchaseOrder(models.Model):
 
     def button_cancel(self):
         for order in self:
-            if order.advance_payment_ids.filtered(lambda p: p.state != 'cancel'):
+            if order.advance_payment_ids.filtered(lambda p: p.state not in ADVANCE_INACTIVE_STATES):
                 raise UserError(_(
                     "Purchase order %s has advance payments. Cancel or reverse them before "
                     "cancelling the order.", order.name))

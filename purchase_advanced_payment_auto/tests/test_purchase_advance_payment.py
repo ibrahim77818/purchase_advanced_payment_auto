@@ -10,15 +10,18 @@ from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 class TestPurchaseAdvancePayment(AccountTestInvoicingCommon):
 
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    def setUpClass(cls):
+        super().setUpClass()
+        # Odoo 18 test base: the second company and foreign currency are created on demand.
+        cls.company_data_2 = cls.setup_other_company()
+        cls.other_currency = cls.setup_other_currency('EUR')
         cls.company = cls.company_data['company']
-        cls.env.user.groups_id |= cls.env.ref('purchase.group_purchase_manager')
+        cls.env.user.group_ids |= cls.env.ref('purchase.group_purchase_manager')
         cls.prepayment_account = cls.env['account.account'].create({
             'name': 'Vendor Prepayments',
             'code': '139900',
             'account_type': 'asset_prepayments',
-            'company_id': cls.company.id,
+            'company_ids': [Command.set(cls.company.ids)],
         })
         cls.advance_product = cls.env['product.product'].create({
             'name': 'Vendor Advance',
@@ -66,7 +69,7 @@ class TestPurchaseAdvancePayment(AccountTestInvoicingCommon):
                 'product_id': product.id,
                 'product_qty': qty,
                 'price_unit': price,
-                'taxes_id': [Command.set(taxes.ids)],
+                'tax_ids': [Command.set(taxes.ids)],
             }) for product, qty, price, taxes in lines],
         })
         if confirm:
@@ -129,7 +132,7 @@ class TestPurchaseAdvancePayment(AccountTestInvoicingCommon):
         company = self.company_data_2['company']
         account = self.env['account.account'].create({
             'name': 'Prepayments 2', 'code': '139901',
-            'account_type': 'asset_prepayments', 'company_id': company.id,
+            'account_type': 'asset_prepayments', 'company_ids': [Command.set(company.ids)],
         })
         settings = self.env['res.config.settings'].with_company(company).create({
             'purchase_advance_payment_enabled': True,
@@ -179,7 +182,7 @@ class TestPurchaseAdvancePayment(AccountTestInvoicingCommon):
         self.assertEqual(payment.payment_type, 'outbound')
         self.assertEqual(payment.partner_type, 'supplier')
         self.assertEqual(payment.destination_account_id, self.prepayment_account)
-        self.assertIn(po.name, payment.ref)
+        self.assertIn(po.name, payment.memo)
         self.assertEqual(po.advance_payment_count, 1)
         # Draft payments do not count as advance yet.
         self.assertEqual(po.advance_payment_total, 0.0)
@@ -187,7 +190,12 @@ class TestPurchaseAdvancePayment(AccountTestInvoicingCommon):
         # ... but they reserve the uninvoiced balance.
         self.assertEqual(po.advance_payment_available, 805.0)
 
-        # The draft journal entry uses the prepayment account as counterpart.
+        # Since Odoo 18 the journal entry is created when the payment is confirmed; it uses the
+        # prepayment account as counterpart.
+        self.assertFalse(payment.move_id)
+        payment.action_post()
+        self.assertIn(payment.state, ('in_process', 'paid'))
+        self.assertEqual(po.advance_payment_total, 345.0)
         liquidity, counterpart, writeoff = payment._seek_for_lines()
         self.assertEqual(counterpart.account_id, self.prepayment_account)
         self.assertFalse(writeoff)
@@ -229,6 +237,23 @@ class TestPurchaseAdvancePayment(AccountTestInvoicingCommon):
         self._register_advance(po, 50.0, post=False)
         with self.assertRaises(UserError):
             po.button_cancel()
+
+    def test_14_advance_without_outstanding_account_still_booked(self):
+        """ With Accounting installed, Odoo 18 creates no journal entry for payments whose method
+        has no outstanding account. Advances fall back to the company's outstanding payments
+        account so that they are always booked on the prepayment account. """
+        self.bank_journal.outbound_payment_method_line_ids.payment_account_id = False
+        po = self._create_po([(self.product_ordered, 1, 100.0, self.tax_15)])
+        payment = self._register_advance(po, 50.0, post=False)
+        # Simulate the Enterprise behaviour (no fallback set by the core on create).
+        payment.outstanding_account_id = False
+        payment.action_post()
+        self.assertTrue(payment.move_id)
+        self.assertEqual(payment.move_id.state, 'posted')
+        liquidity, counterpart, writeoff = payment._seek_for_lines()
+        self.assertEqual(counterpart.account_id, self.prepayment_account)
+        self.assertEqual(liquidity.account_id, payment._get_outstanding_account('outbound'))
+        self.assertEqual(po.advance_payment_total, 50.0)
 
     # ------------------------------------------------------------------
     # Vendor bill deduction and accounting
@@ -325,19 +350,58 @@ class TestPurchaseAdvancePayment(AccountTestInvoicingCommon):
         bill.action_post()
         self.assertEqual(bill.amount_total, 1150.0)
 
-    def test_25_reset_bill_to_draft_unreconciles(self):
+    def test_25_reset_bill_to_draft_and_cancel(self):
         po = self._create_po([(self.product_ordered, 10, 100.0, self.tax_15)])
         payment = self._register_advance(po, 345.0)
         bill = self._create_bill(po)
+        # Since Odoo 19, resetting an entry to draft keeps its reconciliations.
         bill.button_draft()
-        self.assertFalse(payment._purchase_advance_prepayment_lines().reconciled)
+        self.assertTrue(payment._purchase_advance_prepayment_lines().reconciled)
         self.assertEqual(po.advance_payment_applied, 345.0)  # still reserved by the draft bill
+        # Re-posting does not reconcile twice and keeps the prepayment account balanced.
+        bill.action_post()
+        self.assertTrue(self._deduction_line(bill).reconciled)
+        self.assertTrue(self.company.currency_id.is_zero(self._prepayment_balance(po)))
+        # Recomputing the deduction on a draft bill replaces the line and drops its match.
+        bill.button_draft()
+        bill.action_purchase_advance_apply()
+        self.assertFalse(payment._purchase_advance_prepayment_lines().reconciled)
+        self.assertEqual(self._deduction_line(bill).price_subtotal, -345.0)
+        # Cancelling the bill releases the advance.
         bill.button_cancel()
+        self.assertFalse(payment._purchase_advance_prepayment_lines().reconciled)
         self.assertEqual(po.advance_payment_applied, 0.0)
         self.assertEqual(po.advance_payment_residual, 345.0)
 
+    def test_27_with_odoo19_down_payment_bill(self):
+        """ Odoo 19 can link a vendor down-payment bill to the order. The advance is then
+        prorated on what is left after Odoo's own down-payment deduction, and the bill that
+        completes the order still clears the whole advance. """
+        po = self._create_po([(self.product_ordered, 10, 100.0, self.tax_15)])  # 1150 incl. tax
+        self._register_advance(po, 345.0)  # 30 %
+        dp_bill = self.env['account.move'].create({
+            'move_type': 'in_invoice',
+            'partner_id': self.vendor.id,
+            'invoice_date': fields.Date.today(),
+            'invoice_line_ids': [Command.create({'name': 'Down payment', 'quantity': 1.0,
+                                                 'price_unit': 230.0, 'tax_ids': [Command.clear()]})],
+        })
+        dp_bill.action_post()
+        wizard = self.env['bill.to.po.wizard'].with_context(
+            active_ids=[-dp_bill.invoice_line_ids.id]).create({'purchase_order_id': po.id})
+        wizard.action_add_downpayment()
+        self.assertTrue(po.order_line.filtered('is_downpayment'))
+        self.assertEqual(po.advance_payment_available, 575.0)  # 1150 - 230 billed - 345 advanced
+
+        bill = self._create_bill(po)
+        self.assertEqual(self._deduction_line(bill).price_subtotal, -345.0)
+        self.assertAlmostEqual(bill.amount_total, 575.0)  # 1150 - 230 down payment - 345 advance
+        self.assertTrue(self._deduction_line(bill).reconciled)
+        self.assertEqual(po.advance_payment_residual, 0.0)
+        self.assertTrue(self.company.currency_id.is_zero(self._prepayment_balance(po)))
+
     def test_26_foreign_currency_order(self):
-        currency = self.currency_data['currency']
+        currency = self.other_currency
         po = self._create_po([(self.product_ordered, 10, 100.0, self.tax_15)], currency=currency)
         payment = self._register_advance(po, 575.0)  # 50 %
         self.assertEqual(payment.currency_id, currency)
