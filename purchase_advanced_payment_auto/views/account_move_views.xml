@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_move_form_purchase_advance" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.purchase.advance</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="purchase_advance_can_apply" invisible="1"/>
+                <button name="action_purchase_advance_apply" type="object"
+                        string="Apply Advance Payments"
+                        groups="account.group_account_invoice"
+                        attrs="{'invisible': [('purchase_advance_can_apply', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="after">
+                <field name="purchase_advance_order_id" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

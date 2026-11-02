@@ -1,0 +1,665 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* purchase_advanced_payment_auto
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-01 15:16+0000\n"
+"PO-Revision-Date: 2026-11-01 15:16+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/account_move.py:0
+#, python-format
+msgid ""
+"%(bill)s deducts %(deducted)s of advance payments for %(order)s, but only "
+"%(available)s of posted advances remain. Post the advance payment or use "
+"\"Apply Advance Payments\" to recompute the deduction."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/account_move.py:0
+#, python-format
+msgid "%(bill)s: the advance deduction of %(order)s must be in %(currency)s."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/account_move.py:0
+#, python-format
+msgid ""
+"%(bill)s: the advance deduction of %(order)s must use the prepayment account"
+" %(account)s without taxes."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/account_move.py:0
+#, python-format
+msgid "%s: advance deduction lines are only allowed on vendor bills."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.purchase_advance_payment_wizard_view_form
+msgid ""
+"A draft vendor payment is created on the prepayment account. Post it to count it as an advance;\n"
+"                    vendor bills of this order will then deduct it proportionally."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_account_bank_statement_line__purchase_advance_deduction_amount
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_account_move__purchase_advance_deduction_amount
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_account_payment__purchase_advance_deduction_amount
+msgid "Advance Deducted"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_order__advance_payment_applied
+msgid "Advance Deducted on Bills"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_order__advance_deduction_line_ids
+msgid "Advance Deduction Lines"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_account_move_line__purchase_advance_order_id
+msgid "Advance Deduction for"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/wizard/purchase_advance_payment_wizard.py:0
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.res_config_settings_view_form_purchase_advance
+#, python-format
+msgid "Advance Payment"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_order__advance_payment_percentage
+msgid "Advance Payment (%)"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_order__advance_payment_count
+msgid "Advance Payment Count"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_res_company__purchase_advance_product_id
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_res_config_settings__purchase_advance_product_id
+msgid "Advance Payment Product"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_order__advance_payment_ids
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.purchase_order_form_advance_payment
+msgid "Advance Payments"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_purchase_order__advance_payment_applied
+msgid "Advance amount already deducted on non-cancelled vendor bills."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_account_payment__purchase_advance_order_id
+msgid "Advance for Purchase Order"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/account_payment.py:0
+#, python-format
+msgid ""
+"Advance payment %(payment)s must be booked on the prepayment account "
+"%(account)s."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/account_payment.py:0
+#, python-format
+msgid ""
+"Advance payment %(payment)s must be in the currency of %(order)s "
+"(%(currency)s)."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/account_payment.py:0
+#, python-format
+msgid "Advance payment %(payment)s must be paid to the vendor of %(order)s."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/account_payment.py:0
+#, python-format
+msgid "Advance payment %(payment)s of %(amount)s posted."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/account_payment.py:0
+#, python-format
+msgid "Advance payment %s must be an outgoing vendor payment."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/account_payment.py:0
+#, python-format
+msgid ""
+"Advance payment %s was reset to draft; it no longer counts in the advance "
+"total."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/wizard/purchase_advance_payment_wizard.py:0
+#, python-format
+msgid "Advance payment - %s"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/wizard/purchase_advance_payment_wizard.py:0
+#, python-format
+msgid "Advance payment created from %s."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/account_move.py:0
+#, python-format
+msgid "Advance payment deduction - %s"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/account_move.py:0
+#, python-format
+msgid ""
+"Advance payment of %(amount)s deducted for %(order)s (%(percent)s%% of the "
+"order paid in advance)."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/purchase_order.py:0
+#, python-format
+msgid ""
+"Advance payments are not enabled for %s. Enable them in Purchase > "
+"Configuration > Settings."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/account_move.py:0
+#, python-format
+msgid "Advance payments can only be applied on draft vendor bills."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/purchase_order.py:0
+#, python-format
+msgid ""
+"Advance payments can only be registered on confirmed purchase orders (%s)."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/wizard/purchase_advance_payment_wizard.py:0
+#, python-format
+msgid "Advance payments must use a bank or cash journal."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.purchase_order_form_advance_payment
+msgid "Advances"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_purchase_order__advance_payment_enabled
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_res_company__purchase_advance_payment_enabled
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_res_config_settings__purchase_advance_payment_enabled
+msgid ""
+"Allow registering vendor advance payments from confirmed purchase orders and"
+" deduct them automatically on the related vendor bills."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__advance_payment_total
+msgid "Already Advanced (Posted)"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__amount
+msgid "Amount"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.view_move_form_purchase_advance
+msgid "Apply Advance Payments"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_res_company__purchase_advance_account_id
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_res_config_settings__purchase_advance_account_id
+msgid ""
+"Asset account debited by advance payments and credited by the deduction line"
+" of the vendor bills. Reconciliation is enabled on it automatically."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__available_payment_method_line_ids
+msgid "Available Payment Method Line"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.view_account_payment_form_purchase_advance
+msgid "Bills"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_account_payment__purchase_advance_bill_ids
+msgid "Bills Settled by this Advance"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.purchase_advance_payment_wizard_view_form
+msgid "Cancel"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model,name:purchase_advanced_payment_auto.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__company_id
+msgid "Company"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/res_company.py:0
+#, python-format
+msgid ""
+"Company %s: an advance payment product and a prepayment account are required"
+" when purchase advance payments are enabled."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model,name:purchase_advanced_payment_auto.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/wizard/purchase_advance_payment_wizard.py:0
+#, python-format
+msgid "Configure the advance payment product and prepayment account first."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.purchase_advance_payment_wizard_view_form
+msgid "Create Draft Payment"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/wizard/purchase_advance_payment_wizard.py:0
+#, python-format
+msgid "Draft advance payment %(payment)s of %(amount)s created."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__journal_id
+msgid "Journal"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model,name:purchase_advanced_payment_auto.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model,name:purchase_advanced_payment_auto.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__available_amount
+msgid "Maximum Advance"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__memo
+msgid "Memo"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/account_move.py:0
+#, python-format
+msgid "Only billing users can apply advance payments."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/purchase_order.py:0
+#, python-format
+msgid "Only billing users can register advance payments."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__order_amount_total
+msgid "Order Total"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_purchase_order__advance_payment_available
+msgid ""
+"Order total minus billed amounts minus advances (draft or posted) not yet "
+"deducted on bills."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__payment_date
+msgid "Payment Date"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__payment_method_line_id
+msgid "Payment Method"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/wizard/purchase_advance_payment_wizard.py:0
+#, python-format
+msgid ""
+"Payment method %(method)s is not an outgoing method of journal %(journal)s."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model,name:purchase_advanced_payment_auto.model_account_payment
+msgid "Payments"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_purchase_order__advance_payment_percentage
+msgid "Posted advance payments relative to the order total."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_purchase_order__advance_payment_residual
+msgid "Posted advances not yet deducted on a vendor bill."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_res_company__purchase_advance_account_id
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_res_config_settings__purchase_advance_account_id
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.res_config_settings_view_form_purchase_advance
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.view_account_payment_form_purchase_advance
+msgid "Prepayment Account"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.res_config_settings_view_form_purchase_advance
+msgid "Product"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_account_payment__purchase_advance_bill_count
+msgid "Purchase Advance Bill Count"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_account_bank_statement_line__purchase_advance_can_apply
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_account_move__purchase_advance_can_apply
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_account_payment__purchase_advance_can_apply
+msgid "Purchase Advance Can Apply"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_order__advance_payment_enabled
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_res_company__purchase_advance_payment_enabled
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_res_config_settings__purchase_advance_payment_enabled
+msgid "Purchase Advance Payments"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.view_account_payment_search_purchase_advance
+msgid "Purchase Advances"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model,name:purchase_advanced_payment_auto.model_purchase_order
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__purchase_order_id
+msgid "Purchase Order"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/purchase_order.py:0
+#, python-format
+msgid ""
+"Purchase order %s has advance payments. Cancel or reverse them before "
+"cancelling the order."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/purchase_order.py:0
+#, python-format
+msgid ""
+"Purchase order %s has no uninvoiced balance left for an advance payment."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_account_payment__purchase_advance_order_id
+msgid "Purchase order this advance payment was registered for."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/purchase_order.py:0
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.purchase_advance_payment_wizard_view_form
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.purchase_order_form_advance_payment
+#, python-format
+msgid "Register Advance Payment"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model,name:purchase_advanced_payment_auto.model_purchase_advance_payment_wizard
+msgid "Register Purchase Advance Payment"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.res_config_settings_view_form_purchase_advance
+msgid ""
+"Register advance payments on confirmed purchase orders and deduct them "
+"proportionally on vendor bills"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_order__advance_payment_residual
+msgid "Remaining Advance"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_res_company__purchase_advance_product_id
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_res_config_settings__purchase_advance_product_id
+msgid ""
+"Service product used on the vendor bill line that deducts the advance "
+"payment."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_account_move_line__purchase_advance_order_id
+msgid ""
+"Set on the vendor bill line that deducts advance payments of this purchase "
+"order."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__advance_payment_total
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_purchase_order__advance_payment_total
+msgid ""
+"Sum of the posted advance payments of this order. Payments reset to draft or"
+" cancelled are excluded."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/wizard/purchase_advance_payment_wizard.py:0
+#, python-format
+msgid ""
+"The advance payment (%(amount)s) exceeds the remaining uninvoiced balance of"
+" %(order)s (%(available)s)."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/wizard/purchase_advance_payment_wizard.py:0
+#, python-format
+msgid "The advance payment amount must be strictly positive."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/res_company.py:0
+#, python-format
+msgid "The advance payment product %s belongs to another company."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/res_company.py:0
+#, python-format
+msgid "The advance payment product %s must be a service."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/wizard/purchase_advance_payment_wizard.py:0
+#, python-format
+msgid "The journal must belong to the company of the purchase order."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/res_company.py:0
+#, python-format
+msgid "The prepayment account %s belongs to another company."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/res_company.py:0
+#, python-format
+msgid "The prepayment account %s is deprecated."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#. odoo-python
+#: code:addons/purchase_advanced_payment_auto/models/res_company.py:0
+#, python-format
+msgid ""
+"The prepayment account %s must be a current, non-current or prepayment asset"
+" account (not receivable, payable, bank or cash)."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.purchase_order_form_advance_payment
+msgid "Total"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_order__advance_payment_total
+msgid "Total Advance Payments"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.purchase_order_tree_advance_payment
+msgid "Total Advances"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_order__advance_payment_available
+msgid "Uninvoiced Balance Available for Advance"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__available_amount
+msgid "Uninvoiced balance of the order not yet covered by an advance payment."
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,field_description:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__partner_id
+msgid "Vendor"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model_terms:ir.ui.view,arch_db:purchase_advanced_payment_auto.res_config_settings_view_form_purchase_advance
+msgid "Vendor Advance Payments"
+msgstr ""
+
+#. module: purchase_advanced_payment_auto
+#: model:ir.model.fields,help:purchase_advanced_payment_auto.field_purchase_advance_payment_wizard__partner_id
+msgid "You can find a vendor by its Name, TIN, Email or Internal Reference."
+msgstr ""

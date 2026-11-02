@@ -1,0 +1,200 @@
+<!-- Odoo Apps description page for purchase_advanced_payment_auto (Odoo 16.0). Inline styles only: apps.odoo.com strips <style> and <script> blocks. -->
+<section style="max-width:1120px;margin:0 auto;padding:0 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#2b2b33;">
+
+<!-- ============================== HERO ============================== -->
+<div style="background:linear-gradient(120deg,#017E84 0%,#3d6b78 45%,#714B67 100%);border-radius:18px;padding:48px 40px 40px;color:#ffffff;margin-top:12px;">
+  <div style="font-size:13px;letter-spacing:2px;text-transform:uppercase;opacity:.85;margin-bottom:10px;">Purchase &middot; Accounting &middot; Vendor Payments</div>
+  <h1 style="font-size:40px;line-height:1.15;font-weight:700;margin:0 0 14px;color:#ffffff;">Purchase Advance Payment Automation</h1>
+  <p style="font-size:19px;line-height:1.55;max-width:760px;margin:0 0 24px;color:#ffffff;opacity:.95;">Pay vendors in advance straight from the purchase order, booked on a prepayment account. Every vendor bill of that order then deducts its share automatically and reconciles it, so the prepayment account always clears to zero.</p>
+  <div>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Odoo 16.0</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Community &amp; Enterprise</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">16 automated tests</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">English &amp; Arabic</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Technical name: purchase_advanced_payment_auto</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">LGPL-3</span>
+  </div>
+</div>
+
+<!-- ============================== KEY NUMBERS ============================== -->
+<div style="display:flex;flex-wrap:wrap;margin:28px -8px 8px;">
+  <div style="flex:1 1 220px;margin:8px;background:#f6f4f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#714B67;">1 wizard</div><div style="font-size:15px;color:#555;">Amount, journal, payment method, date and memo, from the order</div></div>
+  <div style="flex:1 1 220px;margin:8px;background:#eef6f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#017E84;">5 live figures</div><div style="font-size:15px;color:#555;">Advanced, percentage, deducted, remaining and still available</div></div>
+  <div style="flex:1 1 220px;margin:8px;background:#f6f4f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#714B67;">Pro rata</div><div style="font-size:15px;color:#555;">Each bill deducts its amount &times; the advance percentage</div></div>
+  <div style="flex:1 1 220px;margin:8px;background:#eef6f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#017E84;">0 balance</div><div style="font-size:15px;color:#555;">Prepayment account cleared and reconciled once the order is fully billed</div></div>
+</div>
+
+<!-- ============================== WHY ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:40px 0 6px;color:#2b2b33;">Why this module</h2>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">Odoo 16 has down payments for sales, but nothing equivalent on the purchase side.</p>
+<div style="display:flex;flex-wrap:wrap;margin:0 -10px;">
+  <div style="flex:1 1 440px;margin:10px;border:1px solid #f1d6d6;background:#fff8f8;border-radius:14px;padding:24px 26px;">
+    <h3 style="font-size:19px;font-weight:700;color:#b33939;margin:0 0 12px;">In standard Odoo 16</h3>
+    <ul style="font-size:15px;line-height:1.65;margin:0;padding-left:20px;color:#3a3a42;">
+      <li>A vendor advance is a <b>standalone payment</b> with no link to the purchase order it was paid for.</li>
+      <li>Nothing stops you from <b>advancing more</b> than is still left to bill on the order.</li>
+      <li>The purchase order does not show <b>how much was paid in advance</b>, or what share of the order that is.</li>
+      <li>The advance sits on the <b>vendor payable</b> and is matched by hand against whichever bill comes first.</li>
+      <li>With <b>partial deliveries</b>, deciding how much of the advance each bill should absorb is manual work.</li>
+      <li>Advances paid but not yet earned are <b>not separated</b> on a prepayment asset account.</li>
+    </ul>
+  </div>
+  <div style="flex:1 1 440px;margin:10px;border:1px solid #cfe7e7;background:#f4fbfb;border-radius:14px;padding:24px 26px;">
+    <h3 style="font-size:19px;font-weight:700;color:#017E84;margin:0 0 12px;">With this module</h3>
+    <ul style="font-size:15px;line-height:1.65;margin:0;padding-left:20px;color:#3a3a42;">
+      <li><b>Register Advance Payment</b> on the order creates a vendor payment linked to it, with the order in the memo.</li>
+      <li>The wizard refuses any amount above the order&rsquo;s <b>remaining uninvoiced balance</b>, draft advances included.</li>
+      <li>An <b>Advance Payments</b> tab shows the posted total, the <b>percentage</b>, what was deducted and what is left.</li>
+      <li>The advance is booked on your <b>Prepayment Account</b>; the vendor payable only carries the net bill amount.</li>
+      <li>Each bill gets a <b>deduction line</b> prorated on its amount; the last bill takes whatever is left.</li>
+      <li>On posting, the deduction is <b>reconciled with the advance payment</b>, so the prepayment account clears itself.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================== HOW IT WORKS ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:40px 0 6px;color:#2b2b33;">How it works</h2>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">Four steps, all inside the screens your team already uses.</p>
+<div style="display:flex;flex-wrap:wrap;margin:0 -8px;">
+  <div style="flex:1 1 200px;margin:8px;border-radius:12px;border:1px solid #e3dde2;padding:18px;"><div style="width:34px;height:34px;border-radius:50%;background:#714B67;color:#fff;font-weight:700;text-align:center;line-height:34px;margin-bottom:10px;">1</div><div style="font-weight:700;margin-bottom:4px;">Configure</div><div style="font-size:14px;color:#555;">Enable <b>Vendor Advance Payments</b> and pick a service product and a prepayment account.</div></div>
+  <div style="flex:1 1 200px;margin:8px;border-radius:12px;border:1px solid #e3dde2;padding:18px;"><div style="width:34px;height:34px;border-radius:50%;background:#714B67;color:#fff;font-weight:700;text-align:center;line-height:34px;margin-bottom:10px;">2</div><div style="font-weight:700;margin-bottom:4px;">Register</div><div style="font-size:14px;color:#555;">On a confirmed order, click <b>Register Advance Payment</b>. A draft vendor payment is created.</div></div>
+  <div style="flex:1 1 200px;margin:8px;border-radius:12px;border:1px solid #e3dde2;padding:18px;"><div style="width:34px;height:34px;border-radius:50%;background:#714B67;color:#fff;font-weight:700;text-align:center;line-height:34px;margin-bottom:10px;">3</div><div style="font-weight:700;margin-bottom:4px;">Post</div><div style="font-size:14px;color:#555;">Confirm the payment. It now counts in the order&rsquo;s <b>Total Advance Payments</b> and percentage.</div></div>
+  <div style="flex:1 1 200px;margin:8px;border-radius:12px;border:1px solid #cfe7e7;background:#f4fbfb;padding:18px;"><div style="width:34px;height:34px;border-radius:50%;background:#017E84;color:#fff;font-weight:700;text-align:center;line-height:34px;margin-bottom:10px;">4</div><div style="font-weight:700;margin-bottom:4px;">Bill</div><div style="font-size:14px;color:#555;"><b>Create Bill</b> as usual. The advance share is deducted and reconciled when the bill is posted.</div></div>
+</div>
+
+<!-- ============================== FEATURES ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:40px 0 6px;color:#2b2b33;">Features</h2>
+<p style="font-size:16px;color:#555;margin:0 0 4px;">Screenshots use Odoo 16 demo data: purchase orders for Wood Corner, Azure Interior, Gemini Furniture and Lumber Inc, with 15% purchase tax and a bank journal.</p>
+
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Settings</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">One switch per company, with a dedicated prepayment account</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">Go to <b>Purchase &rsaquo; Configuration &rsaquo; Settings &rsaquo; Advance Payment</b> and tick <b>Vendor Advance Payments</b> (off by default). A <b>Product</b> (service) and a <b>Prepayment Account</b> (current, non-current or prepayment asset) are then required. Reconciliation is switched on for the account automatically. The module adds no new menus: everything happens on the purchase order, the payment and the bill.</p>
+  <img src="pap_01_settings.png" alt="Purchase settings with the Advance Payment section, product and prepayment account" style="width:100%;max-width:1000px;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 1</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Register an advance from the purchase order</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">Confirmed orders get a <b>Register Advance Payment</b> button for billing users. The wizard shows the <b>Order Total</b>, what is <b>Already Advanced (Posted)</b> and the <b>Maximum Advance</b>, and asks for the <b>Amount</b>, <b>Journal</b>, <b>Payment Method</b>, <b>Payment Date</b> and <b>Memo</b> (pre-filled with the order number). The button stays available on partly billed orders as long as there is an uninvoiced balance left.</p>
+  <img src="pap_02_po_button.png" alt="Confirmed purchase order with the Register Advance Payment button" style="width:100%;margin-bottom:22px;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+  <img src="pap_03_wizard.png" alt="Register Advance Payment wizard with amount, journal, payment method, date and memo" style="width:100%;max-width:1000px;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 2</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Never advance more than is left to bill</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">The amount must be positive and must not exceed the order&rsquo;s remaining uninvoiced balance. The check is repeated when the payment is created, so two people working on the same order cannot over-commit it. Draft advances already reserve their share of the balance.</p>
+  <img src="pap_04_limit_error.png" alt="Validation error: the advance exceeds the remaining uninvoiced balance" style="width:100%;max-width:1000px;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+  <div style="background:#f4fbfb;border-left:4px solid #017E84;border-radius:8px;padding:16px 20px;font-size:15px;line-height:1.6;margin-top:14px;"><b>Maximum advance</b> = order total &minus; amounts already on vendor bills (credit notes count negatively) &minus; advances, draft or posted, not yet deducted on a bill.</div>
+</div>
+
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 3</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">A draft vendor payment, linked to the order</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">The wizard creates an outgoing vendor payment in <b>Draft</b>, with the order&rsquo;s vendor and currency, the memo <b>Advance payment - P0000x</b>, and two extra fields: <b>Advance for Purchase Order</b> and <b>Prepayment Account</b>. Review it and click <b>Confirm</b> to post it.</p>
+  <img src="pap_05_draft_payment.png" alt="Draft advance payment showing the purchase order link and prepayment account" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 4</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">See every advance on the purchase order</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">The <b>Advance Payments</b> tab and the <b>Advances</b> smart button show: <b>Total Advance Payments</b> (posted only &ndash; it drops again if a payment is reset to draft or cancelled), <b>Advance Payment (%)</b> of the order total, <b>Advance Deducted on Bills</b>, <b>Remaining Advance</b> and <b>Uninvoiced Balance Available for Advance</b>, followed by the list of payments with their status. Below, P00008 has a posted advance of $&nbsp;6,072.00 (30%) and a second one still in draft.</p>
+  <img src="pap_06_po_advance_tab.png" alt="Advance Payments tab on the purchase order with totals, percentage and payment list" style="width:100%;margin-bottom:22px;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+  <img src="pap_11_po_list.png" alt="Purchase order list with Total Advance Payments and Advance Payment percentage columns" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+  <div style="font-size:13px;color:#777;margin:6px 0 22px;">The two figures are stored, so they can be shown as optional columns in the order list, summed, filtered and grouped.</div>
+</div>
+
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 5</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Vendor bills deduct their share automatically</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;"><b>Create Bill</b> adds one line per order with the advance product, the label <b>Advance payment deduction - P0000x</b>, the prepayment account and <b>no taxes</b>. Taxes are still computed on the full purchase, and the <b>Amount Due</b> is the net left to pay. A note in the chatter records the amount and percentage. If an advance is posted after the bill was created, <b>Apply Advance Payments</b> on the draft bill recomputes the deduction.</p>
+  <img src="pap_08_bill_deduction.png" alt="Vendor bill with an automatic advance payment deduction line" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 6</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Clean journal entries, reconciled for you</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">The bill credits the prepayment account with the deduction and the vendor payable with the net amount only. When the bill is posted, the deduction is reconciled with the advance payment&rsquo;s prepayment line; the payment then shows a <b>Bills</b> smart button listing the bills it settled.</p>
+  <img src="pap_09_bill_journal_items.png" alt="Bill journal items: expenses and tax debited, prepayments and payable credited, with chatter note" style="width:100%;margin-bottom:22px;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+  <img src="pap_10_payment_posted.png" alt="Posted advance payment with the Bills smart button" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 7</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Fully translated into Arabic</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">Every label, help text, button and error message ships with an Arabic (<b>ar_001</b>) translation, loaded automatically when Arabic is installed.</p>
+  <img src="pap_12_arabic.png" alt="Purchase order Advance Payments tab in Arabic" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<!-- ============================== ACCOUNTING ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:48px 0 6px;color:#2b2b33;">The accounting behind it</h2>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">Using the demo order P00008: total $&nbsp;20,240.00, advance $&nbsp;6,072.00 (30%), first bill for the goods received so far.</p>
+<table style="width:100%;border-collapse:collapse;font-size:14px;">
+  <thead><tr style="background:#714B67;color:#fff;"><th style="text-align:left;padding:9px 8px;">Document</th><th style="text-align:left;padding:9px 8px;">Account</th><th style="text-align:right;padding:9px 8px;">Debit</th><th style="text-align:right;padding:9px 8px;">Credit</th></tr></thead>
+  <tbody>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:9px 8px;">Advance payment</td><td style="padding:9px 8px;">Prepayments (asset)</td><td style="padding:9px 8px;text-align:right;">6,072.00</td><td style="padding:9px 8px;"></td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:9px 8px;"></td><td style="padding:9px 8px;">Bank outstanding payments</td><td style="padding:9px 8px;"></td><td style="padding:9px 8px;text-align:right;">6,072.00</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:9px 8px;">Vendor bill</td><td style="padding:9px 8px;">Expenses (goods received)</td><td style="padding:9px 8px;text-align:right;">10,800.00</td><td style="padding:9px 8px;"></td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:9px 8px;"></td><td style="padding:9px 8px;">Tax paid 15%</td><td style="padding:9px 8px;text-align:right;">1,620.00</td><td style="padding:9px 8px;"></td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:9px 8px;"></td><td style="padding:9px 8px;">Prepayments (deduction, reconciled)</td><td style="padding:9px 8px;"></td><td style="padding:9px 8px;text-align:right;">3,726.00</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:9px 8px;"></td><td style="padding:9px 8px;">Account payable (vendor)</td><td style="padding:9px 8px;"></td><td style="padding:9px 8px;text-align:right;">8,694.00</td></tr>
+  </tbody>
+</table>
+<div style="background:#f4fbfb;border-left:4px solid #017E84;border-radius:8px;padding:16px 20px;font-size:15px;line-height:1.6;margin-top:14px;"><b>Deduction rule:</b> bill amount including tax &times; posted advance &divide; order total, capped at the advance still available. Here 12,420.00 &times; 6,072.00 &divide; 20,240.00 = <b>3,726.00</b>. $&nbsp;2,346.00 remains on the prepayment account and is deducted by the next bills; the bill that completes the order takes whatever is left, so rounding never leaves a cent behind.</div>
+<div style="background:#f6f4f6;border-left:4px solid #714B67;border-radius:8px;padding:16px 20px;font-size:15px;line-height:1.6;margin-top:12px;"><b>Tax note:</b> the deduction line carries no tax, and the bill&rsquo;s tax is computed on the full purchase. This fits advances that were not invoiced for VAT on their own. If your tax rules require a separate tax invoice for advance payments, contact me before using it.</div>
+
+<!-- ============================== CORNER CASES ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:48px 0 6px;color:#2b2b33;">Built for real-world corner cases</h2>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">Each of these is covered by an automated test.</p>
+<div style="display:flex;flex-wrap:wrap;margin:0 -8px;font-size:15px;line-height:1.55;">
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Partial deliveries</b><br/><span style="color:#555;">Each bill deducts in proportion to its own amount; the last bill sweeps the remainder.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Rounding</b><br/><span style="color:#555;">Odd prices (e.g. 3 &times; 333.33) still deduct exactly the advance in total.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>One bill, several orders</b><br/><span style="color:#555;">Grouped bills get one deduction line per order, each at that order&rsquo;s own percentage.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Foreign currency</b><br/><span style="color:#555;">The advance is paid in the order currency; the prepayment balance nets to zero in company currency.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Payment reset to draft</b><br/><span style="color:#555;">It drops out of the advance total, and a bill can no longer be posted with a deduction it does not cover.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Advance posted after the bill</b><br/><span style="color:#555;">Draft advances are not deducted; <b>Apply Advance Payments</b> recomputes the bill once the advance is posted.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Bill reset or cancelled</b><br/><span style="color:#555;">The reconciliation is undone and the advance becomes available again for the next bill.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Cancelling the order</b><br/><span style="color:#555;">Blocked while advance payments exist; cancel or reverse them first.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Half-configured company</b><br/><span style="color:#555;">Settings cannot be saved enabled without product and account, and the button refuses to run for a company without them.</span></div>
+</div>
+
+<!-- ============================== SECURITY ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:48px 0 6px;color:#2b2b33;">Security</h2>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">Built on Odoo&rsquo;s standard groups; no new groups to maintain.</p>
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <thead><tr style="background:#714B67;color:#fff;"><th style="text-align:left;padding:10px 14px;width:34%;">Who</th><th style="text-align:left;padding:10px 14px;">Sees / can do</th></tr></thead>
+  <tbody>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;"><b>Invoicing &rsaquo; Billing</b> and above</td><td style="padding:10px 14px;"><b>Register Advance Payment</b>, the <b>Advance Payments</b> tab, the <b>Advances</b> smart button and <b>Apply Advance Payments</b> on bills. The wizard also checks write access to the order, so record rules still apply.</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;">Purchase users without billing rights</td><td style="padding:10px 14px;">The purchase order as usual; advance buttons, tab and columns stay hidden.</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;"><b>Purchase &rsaquo; Administrator</b></td><td style="padding:10px 14px;">The <b>Advance Payment</b> section in Purchase settings.</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;">Multi-company</td><td style="padding:10px 14px;">Settings are per company; the product, prepayment account and journal must belong to the order&rsquo;s company, and payments are checked against it.</td></tr>
+  </tbody>
+</table>
+
+<!-- ============================== TECHNICAL ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:48px 0 6px;color:#2b2b33;">Technical details</h2>
+<table style="width:100%;border-collapse:collapse;font-size:15px;margin-top:12px;">
+  <tbody>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:36%;color:#777;">Odoo version</td><td style="padding:10px 14px;overflow-wrap:anywhere;">16.0, Community and Enterprise (module version 16.0.1.0.0)</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:36%;color:#777;">Depends on</td><td style="padding:10px 14px;overflow-wrap:anywhere;"><code>purchase</code> (which installs <code>account</code>)</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:36%;color:#777;">Python dependencies</td><td style="padding:10px 14px;overflow-wrap:anywhere;">None</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:36%;color:#777;">Menus</td><td style="padding:10px 14px;overflow-wrap:anywhere;">No new menus; buttons, tab and smart buttons on purchase orders, payments and vendor bills</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:36%;color:#777;">Settings</td><td style="padding:10px 14px;overflow-wrap:anywhere;">Purchase &rsaquo; Configuration &rsaquo; Settings &rsaquo; Advance Payment</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:36%;color:#777;">Models</td><td style="padding:10px 14px;overflow-wrap:anywhere;">New: <code>purchase.advance.payment.wizard</code>. Extended: <code>purchase.order</code>, <code>account.payment</code>, <code>account.move</code>, <code>account.move.line</code>, <code>res.company</code>, <code>res.config.settings</code></td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:36%;color:#777;">Automated tests</td><td style="padding:10px 14px;overflow-wrap:anywhere;">16 tests: settings saved from the settings screen, wizard limits, draft vs posted totals, full and partial billing, rounding, foreign currency, grouped bills, reconciliation and reversal</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:36%;color:#777;">Translations</td><td style="padding:10px 14px;overflow-wrap:anywhere;">English, Arabic (<code>ar_001</code>)</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:36%;color:#777;">License</td><td style="padding:10px 14px;overflow-wrap:anywhere;">LGPL-3</td></tr>
+  </tbody>
+</table>
+
+<!-- ============================== CONTACT ============================== -->
+<div style="margin:52px 0 40px;background:linear-gradient(120deg,#714B67 0%,#017E84 100%);border-radius:18px;padding:36px 40px;color:#fff;">
+  <h2 style="font-size:26px;font-weight:700;margin:0 0 8px;color:#fff;">Support &amp; customization</h2>
+  <p style="font-size:16px;line-height:1.6;margin:0 0 20px;color:#fff;opacity:.95;">Questions, a demo, or an adaptation to your own process? Get in touch.</p>
+  <a href="mailto:ibrahim.yahiah@gmail.com" style="display:inline-block;background:#fff;color:#714B67;font-weight:700;text-decoration:none;border-radius:8px;padding:12px 22px;margin:0 12px 10px 0;">&#9993;  ibrahim.yahiah@gmail.com</a>
+  <a href="https://www.linkedin.com/in/ibrahim-yahia" target="_blank" rel="noopener" style="display:inline-block;border:2px solid #fff;color:#fff;font-weight:700;text-decoration:none;border-radius:8px;padding:10px 22px;margin:0 0 10px 0;">LinkedIn: Ibrahim Yahia</a>
+  <p style="font-size:13px;margin:14px 0 0;opacity:.8;color:#fff;">Author: Ibrahim Yahia &middot; License: LGPL-3</p>
+</div>
+
+</section>

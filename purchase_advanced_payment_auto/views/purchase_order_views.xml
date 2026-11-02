@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_form_advance_payment" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit.advance.payment</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="before">
+                <field name="advance_payment_enabled" invisible="1"/>
+                <field name="advance_payment_available" invisible="1" groups="account.group_account_invoice"/>
+                <button name="action_open_advance_payment_wizard" type="object"
+                        string="Register Advance Payment"
+                        groups="account.group_account_invoice"
+                        attrs="{'invisible': ['|', '|', ('advance_payment_enabled', '=', False), ('state', 'not in', ('purchase', 'done')), ('advance_payment_available', '&lt;=', 0)]}"
+                        data-hotkey="shift+a"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button type="object" name="action_view_advance_payments"
+                        class="oe_stat_button" icon="fa-money"
+                        groups="account.group_account_invoice"
+                        attrs="{'invisible': [('advance_payment_count', '=', 0)]}">
+                    <field name="advance_payment_count" widget="statinfo" string="Advances"/>
+                </button>
+            </xpath>
+            <xpath expr="//page[@name='purchase_delivery_invoice']" position="before">
+                <page string="Advance Payments" name="advance_payments"
+                      groups="account.group_account_invoice"
+                      attrs="{'invisible': [('advance_payment_enabled', '=', False), ('advance_payment_count', '=', 0)]}">
+                    <group>
+                        <group name="advance_metrics">
+                            <field name="advance_payment_total"/>
+                            <field name="advance_payment_percentage"/>
+                        </group>
+                        <group name="advance_balances">
+                            <field name="advance_payment_applied"/>
+                            <field name="advance_payment_residual"/>
+                            <field name="advance_payment_available"/>
+                        </group>
+                    </group>
+                    <field name="advance_payment_ids" readonly="1" nolabel="1">
+                        <tree decoration-muted="state == 'cancel'" decoration-info="state == 'draft'">
+                            <field name="name"/>
+                            <field name="date"/>
+                            <field name="journal_id"/>
+                            <field name="payment_method_line_id"/>
+                            <field name="ref"/>
+                            <field name="amount" sum="Total"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="state" widget="badge"
+                                   decoration-success="state == 'posted'" decoration-info="state == 'draft'"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_tree_advance_payment" model="ir.ui.view">
+        <field name="name">purchase.order.tree.inherit.advance.payment</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="advance_payment_total" optional="hide" sum="Total Advances"
+                       groups="account.group_account_invoice"/>
+                <field name="advance_payment_percentage" optional="hide"
+                       groups="account.group_account_invoice"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

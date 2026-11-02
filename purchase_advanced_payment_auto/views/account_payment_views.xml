@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_payment_form_purchase_advance" model="ir.ui.view">
+        <field name="name">account.payment.form.inherit.purchase.advance</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_purchase_advance_bills" type="object"
+                        class="oe_stat_button" icon="fa-file-text-o"
+                        attrs="{'invisible': [('purchase_advance_bill_count', '=', 0)]}">
+                    <field name="purchase_advance_bill_count" widget="statinfo" string="Bills"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name="purchase_advance_order_id"
+                       attrs="{'invisible': [('purchase_advance_order_id', '=', False)]}"/>
+                <field name="destination_account_id" string="Prepayment Account" readonly="1"
+                       attrs="{'invisible': [('purchase_advance_order_id', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_payment_search_purchase_advance" model="ir.ui.view">
+        <field name="name">account.payment.search.inherit.purchase.advance</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="purchase_advance_order_id"/>
+                <filter string="Purchase Advances" name="purchase_advances"
+                        domain="[('purchase_advance_order_id', '!=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

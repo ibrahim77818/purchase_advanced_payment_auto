@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_purchase_advance" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.purchase.advance.payment</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="purchase.res_config_settings_view_form_purchase"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='invoicing_settings_container']" position="after">
+                <h2>Advance Payment</h2>
+                <div class="row mt16 o_settings_container" name="purchase_advance_payment_container">
+                    <div class="col-12 col-lg-6 o_setting_box" id="purchase_advance_payment_setting">
+                        <div class="o_setting_left_pane">
+                            <field name="purchase_advance_payment_enabled"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="purchase_advance_payment_enabled" string="Vendor Advance Payments"/>
+                            <div class="text-muted">
+                                Register advance payments on confirmed purchase orders and deduct them proportionally on vendor bills
+                            </div>
+                            <div class="content-group" attrs="{'invisible': [('purchase_advance_payment_enabled', '=', False)]}">
+                                <div class="row mt16">
+                                    <label for="purchase_advance_product_id" string="Product" class="col-lg-4 o_light_label"/>
+                                    <field name="purchase_advance_product_id"
+                                           context="{'default_detailed_type': 'service', 'default_type': 'service', 'default_purchase_ok': True, 'default_sale_ok': False}"
+                                           attrs="{'required': [('purchase_advance_payment_enabled', '=', True)]}"/>
+                                </div>
+                                <div class="row">
+                                    <label for="purchase_advance_account_id" string="Prepayment Account" class="col-lg-4 o_light_label"/>
+                                    <field name="purchase_advance_account_id"
+                                           options="{'no_create': True}"
+                                           attrs="{'required': [('purchase_advance_payment_enabled', '=', True)]}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
