@@ -11,21 +11,21 @@
                 <button name="action_open_advance_payment_wizard" type="object"
                         string="Register Advance Payment"
                         groups="account.group_account_invoice"
-                        attrs="{'invisible': ['|', '|', ('advance_payment_enabled', '=', False), ('state', 'not in', ('purchase', 'done')), ('advance_payment_available', '&lt;=', 0)]}"
+                        invisible="not advance_payment_enabled or state not in ('purchase', 'done') or advance_payment_available &lt;= 0"
                         data-hotkey="shift+a"/>
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button type="object" name="action_view_advance_payments"
                         class="oe_stat_button" icon="fa-money"
                         groups="account.group_account_invoice"
-                        attrs="{'invisible': [('advance_payment_count', '=', 0)]}">
+                        invisible="advance_payment_count == 0">
                     <field name="advance_payment_count" widget="statinfo" string="Advances"/>
                 </button>
             </xpath>
             <xpath expr="//page[@name='purchase_delivery_invoice']" position="before">
                 <page string="Advance Payments" name="advance_payments"
                       groups="account.group_account_invoice"
-                      attrs="{'invisible': [('advance_payment_enabled', '=', False), ('advance_payment_count', '=', 0)]}">
+                      invisible="not advance_payment_enabled and advance_payment_count == 0">
                     <group>
                         <group name="advance_metrics">
                             <field name="advance_payment_total"/>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Purchase Advance Payment Automation',
-    'version': '16.0.1.0.0',
+    'version': '17.0.1.0.0',
     'category': 'Inventory/Purchase',
     'summary': 'Register vendor advance payments from Purchase Orders and deduct them '
                'automatically and proportionally on vendor bills through a prepayment account.',

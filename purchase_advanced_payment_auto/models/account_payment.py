@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from markupsafe import Markup
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
@@ -99,19 +101,19 @@ class AccountPayment(models.Model):
     def action_post(self):
         res = super().action_post()
         for pay in self.filtered('purchase_advance_order_id'):
-            pay.purchase_advance_order_id.message_post(body=_(
-                "Advance payment %(payment)s of %(amount)s posted.",
-                payment=pay._get_html_link(),
-                amount=pay.currency_id.format(pay.amount)))
+            pay.purchase_advance_order_id.message_post(body=Markup(_(
+                "Advance payment %(payment)s of %(amount)s posted.")) % {
+                'payment': pay._get_html_link(),
+                'amount': pay.currency_id.format(pay.amount)})
         return res
 
     def action_draft(self):
         advances = self.filtered(lambda p: p.purchase_advance_order_id and p.state == 'posted')
         res = super().action_draft()
         for pay in advances:
-            pay.purchase_advance_order_id.message_post(body=_(
-                "Advance payment %s was reset to draft; it no longer counts in the advance total.",
-                pay._get_html_link()))
+            pay.purchase_advance_order_id.message_post(body=Markup(_(
+                "Advance payment %s was reset to draft; it no longer counts in the advance total.")) % (
+                pay._get_html_link(),))
         return res
 
     def action_view_purchase_advance_bills(self):

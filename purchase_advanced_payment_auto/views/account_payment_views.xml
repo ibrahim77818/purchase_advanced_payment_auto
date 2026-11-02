@@ -8,15 +8,15 @@
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="action_view_purchase_advance_bills" type="object"
                         class="oe_stat_button" icon="fa-file-text-o"
-                        attrs="{'invisible': [('purchase_advance_bill_count', '=', 0)]}">
+                        invisible="purchase_advance_bill_count == 0">
                     <field name="purchase_advance_bill_count" widget="statinfo" string="Bills"/>
                 </button>
             </xpath>
             <xpath expr="//field[@name='ref']" position="after">
                 <field name="purchase_advance_order_id"
-                       attrs="{'invisible': [('purchase_advance_order_id', '=', False)]}"/>
+                       invisible="not purchase_advance_order_id"/>
                 <field name="destination_account_id" string="Prepayment Account" readonly="1"
-                       attrs="{'invisible': [('purchase_advance_order_id', '=', False)]}"/>
+                       invisible="not purchase_advance_order_id"/>
             </xpath>
         </field>
     </record>
