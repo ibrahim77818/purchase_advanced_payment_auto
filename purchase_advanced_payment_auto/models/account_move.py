@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-from odoo import _, api, fields, models
+from markupsafe import Markup
+
+from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -83,7 +85,7 @@ class AccountMove(models.Model):
             'account_id': company.purchase_advance_account_id.id,
             'quantity': 1.0,
             'price_unit': -amount,
-            'tax_ids': [(5, 0, 0)],
+            'tax_ids': [Command.clear()],
             'purchase_advance_order_id': order.id,
             'sequence': 9999,
         }
@@ -93,21 +95,21 @@ class AccountMove(models.Model):
         for move in self:
             if move.state != 'draft' or move.move_type != 'in_invoice':
                 continue
-            commands = [(2, line.id) for line in move.invoice_line_ids.filtered('purchase_advance_order_id')]
+            commands = [Command.delete(line.id) for line in move.invoice_line_ids.filtered('purchase_advance_order_id')]
             if commands:
                 move.write({'invoice_line_ids': commands})
             deductions = move._purchase_advance_compute_deductions()
             if not deductions:
                 continue
             move.write({'invoice_line_ids': [
-                (0, 0, move._purchase_advance_prepare_line_vals(order, amount))
+                Command.create(move._purchase_advance_prepare_line_vals(order, amount))
                 for order, amount in deductions.items()
             ]})
             for order, amount in deductions.items():
-                move.message_post(body=_(
-                    "Advance payment of %(amount)s deducted for %(order)s (%(percent)s%% of the order paid in advance).",
-                    amount=move.currency_id.format(amount), order=order._get_html_link(),
-                    percent=round(order.advance_payment_percentage, 2)))
+                move.message_post(body=Markup(_(
+                    "Advance payment of %(amount)s deducted for %(order)s (%(percent)s%% of the order paid in advance).")) % {
+                    'amount': move.currency_id.format(amount), 'order': order._get_html_link(),
+                    'percent': round(order.advance_payment_percentage, 2)})
 
     def action_purchase_advance_apply(self):
         if not self.env.user.has_group('account.group_account_invoice'):

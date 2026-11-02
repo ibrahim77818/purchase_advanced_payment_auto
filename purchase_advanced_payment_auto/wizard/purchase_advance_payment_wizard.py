@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from markupsafe import Markup
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
@@ -116,7 +118,7 @@ class PurchaseAdvancePaymentWizard(models.TransientModel):
             'date': self.payment_date,
             'journal_id': self.journal_id.id,
             'payment_method_line_id': self.payment_method_line_id.id,
-            'ref': self.memo,
+            'memo': self.memo,
             'purchase_advance_order_id': order.id,
             'destination_account_id': order.company_id.purchase_advance_account_id.id,
             'company_id': order.company_id.id,
@@ -132,10 +134,10 @@ class PurchaseAdvancePaymentWizard(models.TransientModel):
         if not order.company_id.purchase_advance_account_id or not order.company_id.purchase_advance_product_id:
             raise UserError(_("Configure the advance payment product and prepayment account first."))
         payment = self.env['account.payment'].with_company(order.company_id).create(self._prepare_payment_vals())
-        payment.message_post(body=_("Advance payment created from %s.", order._get_html_link()))
-        order.message_post(body=_(
-            "Draft advance payment %(payment)s of %(amount)s created.",
-            payment=payment._get_html_link(), amount=order.currency_id.format(payment.amount)))
+        payment.message_post(body=Markup(_("Advance payment created from %s.")) % (order._get_html_link(),))
+        order.message_post(body=Markup(_(
+            "Draft advance payment %(payment)s of %(amount)s created.")) % {
+            'payment': payment._get_html_link(), 'amount': order.currency_id.format(payment.amount)})
         return {
             'name': _('Advance Payment'),
             'type': 'ir.actions.act_window',

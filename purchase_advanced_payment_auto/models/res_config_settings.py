@@ -14,7 +14,7 @@ class ResConfigSettings(models.TransientModel):
         domain="[('type', '=', 'service'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]")
     purchase_advance_account_id = fields.Many2one(
         related='company_id.purchase_advance_account_id', readonly=False,
-        domain="[('account_type', 'in', %s), ('deprecated', '=', False), ('company_id', '=', company_id)]"
+        domain="[('account_type', 'in', %s), ('deprecated', '=', False), ('company_ids', 'parent_of', company_id)]"
                % (PREPAYMENT_ACCOUNT_TYPES,))
 
     def set_values(self):

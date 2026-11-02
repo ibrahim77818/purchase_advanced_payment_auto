@@ -22,7 +22,7 @@ class ResCompany(models.Model):
     purchase_advance_account_id = fields.Many2one(
         'account.account',
         string='Prepayment Account',
-        domain="[('account_type', 'in', %s), ('deprecated', '=', False), ('company_id', '=', id)]"
+        domain="[('account_type', 'in', %s), ('deprecated', '=', False), ('company_ids', 'parent_of', id)]"
                % (PREPAYMENT_ACCOUNT_TYPES,),
         help='Asset account debited by advance payments and credited by the deduction '
              'line of the vendor bills. Reconciliation is enabled on it automatically.')
@@ -48,11 +48,11 @@ class ResCompany(models.Model):
                 if product.type != 'service':
                     raise ValidationError(_(
                         "The advance payment product %s must be a service.", product.display_name))
-                if product.company_id and product.company_id != company:
+                if product.company_id and product.company_id not in company.parent_ids:
                     raise ValidationError(_(
                         "The advance payment product %s belongs to another company.", product.display_name))
             if account:
-                if account.company_id != company:
+                if not account.company_ids & company.parent_ids:
                     raise ValidationError(_(
                         "The prepayment account %s belongs to another company.", account.display_name))
                 if account.deprecated:

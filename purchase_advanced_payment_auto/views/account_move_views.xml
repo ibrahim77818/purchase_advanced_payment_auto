@@ -10,9 +10,9 @@
                 <button name="action_purchase_advance_apply" type="object"
                         string="Apply Advance Payments"
                         groups="account.group_account_invoice"
-                        attrs="{'invisible': [('purchase_advance_can_apply', '=', False)]}"/>
+                        invisible="not purchase_advance_can_apply"/>
             </xpath>
-            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="after">
+            <xpath expr="//field[@name='invoice_line_ids']/list/field[@name='name']" position="after">
                 <field name="purchase_advance_order_id" optional="hide"/>
             </xpath>
         </field>
